@@ -156,6 +156,8 @@ DECLSPEC_NORETURN EXTERN_C VOID VmxpExitHandler( IN PCONTEXT Context )
     guestContext.GpRegs = Context;
     guestContext.ExitPending = FALSE;
 
+	//Context->Rsp = guestContext.GuestRsp;
+
     (g_ExitHandler[guestContext.ExitReason])(&guestContext);
 
     if (guestContext.ExitPending)
@@ -212,6 +214,7 @@ VOID VmExitINVD( IN PGUEST_STATE GuestState )
 /// <param name="GuestState">Guest VM state</param>
 VOID VmExitCPUID( IN PGUEST_STATE GuestState )
 {
+	KdBreakPoint();
     CPUID cpu_info = { 0 };
     __cpuidex( (int*)&cpu_info, (int)GuestState->GpRegs->Rax, (int)GuestState->GpRegs->Rcx );
 
@@ -338,26 +341,34 @@ VOID VmExitCR( IN PGUEST_STATE GuestState )
 {
     PMOV_CR_QUALIFICATION data = (PMOV_CR_QUALIFICATION)&GuestState->ExitQualification;
     PULONG64 regPtr = (PULONG64)&GuestState->GpRegs->Rax + data->Fields.Register;
+	ULONG64 regValue = *((PULONG64)&GuestState->GpRegs->Rax + data->Fields.Register);
     VPID_CTX ctx = { 0 };
 
     switch (data->Fields.AccessType)
     {
     case TYPE_MOV_TO_CR:
     {
+		if (data->Fields.Register == 4)
+		{
+			regValue = GuestState->GuestRsp;
+		}
+
         switch (data->Fields.ControlRegister)
         {
         case 0:
-            __vmx_vmwrite( GUEST_CR0, *regPtr );
-            __vmx_vmwrite( CR0_READ_SHADOW, *regPtr );
+            __vmx_vmwrite( GUEST_CR0, regValue);
+            __vmx_vmwrite( CR0_READ_SHADOW, regValue);
             break;
         case 3:
-            __vmx_vmwrite( GUEST_CR3, *regPtr );
+
+			regValue &= ~(1ULL << 63);
+            __vmx_vmwrite( GUEST_CR3, regValue);
             if (g_Data->Features.VPID)
                 __invvpid( INV_ALL_CONTEXTS, &ctx );
             break;
         case 4:
-            __vmx_vmwrite( GUEST_CR4, *regPtr );
-            __vmx_vmwrite( CR4_READ_SHADOW, *regPtr );
+            __vmx_vmwrite( GUEST_CR4, regValue);
+            __vmx_vmwrite( CR4_READ_SHADOW, regValue);
             break;
         default:
             DPRINT( "HyperBone: CPU %d: %s: Unsupported register %d\n", CPU_IDX, __FUNCTION__, data->Fields.ControlRegister );
@@ -385,6 +396,12 @@ VOID VmExitCR( IN PGUEST_STATE GuestState )
             ASSERT( FALSE );
             break;
         }
+
+		if (data->Fields.Register == 4)
+		{
+			__vmx_vmwrite(GUEST_RSP, *regPtr);
+		}
+
     }
     break;
 
@@ -614,9 +631,9 @@ VOID VmExitMTF( IN PGUEST_STATE GuestState )
 VOID VmExitStartFailed( IN PGUEST_STATE GuestState )
 {
     DPRINT(
-        "HyperBone: CPU %d: %s: Failed to enter VM, reason %d, code %d\n",
+        "HyperBone: CPU %d: %s: Failed to enter VM, reason %d, code %d, guest RIP %p\n",
         CPU_IDX, __FUNCTION__, 
-        GuestState->ExitReason, GuestState->ExitQualification 
+        GuestState->ExitReason, GuestState->ExitQualification,GuestState->GuestRip 
         );
 
     KeBugCheckEx( HYPERVISOR_ERROR, BUG_CHECK_INVALID_VM, GuestState->ExitReason, GuestState->ExitQualification, 0 );

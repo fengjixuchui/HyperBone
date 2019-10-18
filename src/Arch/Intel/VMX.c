@@ -482,8 +482,11 @@ VOID VmxSetupVMCS( IN PVCPU VpData )
     // makes use of both of these instructions if the CPU supports it. By using
     // VmxpAdjustMsr, these options will be ignored if this processor does
     // not actually support the instructions to begin with.
+
     vmCpuCtl2Requested.Fields.EnableRDTSCP = TRUE;
+	vmCpuCtl2Requested.Fields.EnableINVPCID = TRUE;
     vmCpuCtl2Requested.Fields.EnableXSAVESXSTORS = TRUE;
+	
 
     // Begin by setting the link pointer to the required value for 4KB VMCS.
     __vmx_vmwrite( VMCS_LINK_POINTER, MAXULONG64 );
@@ -532,7 +535,7 @@ VOID VmxSetupVMCS( IN PVCPU VpData )
     // Exception bitmap
     ULONG ExceptionBitmap = 0;
     //ExceptionBitmap |= 1 << VECTOR_DEBUG_EXCEPTION;
-    ExceptionBitmap |= 1 << VECTOR_BREAKPOINT_EXCEPTION;
+    //ExceptionBitmap |= 1 << VECTOR_BREAKPOINT_EXCEPTION;
 
     __vmx_vmwrite( EXCEPTION_BITMAP, ExceptionBitmap );
 

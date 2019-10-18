@@ -104,45 +104,45 @@
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win8.1 Debug|x64'">
-    <OutDir>$(SolutionDir)\bin\$(Platform)\$(ConfigurationName)\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(ConfigurationName)\</OutDir>
     <TimeStampServer>http://timestamp.verisign.com/scripts/timstamp.dll</TimeStampServer>
-    <IntDir>$(SolutionDir)\obj\$(Platform)\$(ConfigurationName)\</IntDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ConfigurationName)\</IntDir>
     <TargetName>$(TargetName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win10Debug|x64'">
-    <OutDir>$(SolutionDir)\bin\$(Platform)\$(ConfigurationName)\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(ConfigurationName)\</OutDir>
     <TimeStampServer>http://timestamp.verisign.com/scripts/timstamp.dll</TimeStampServer>
-    <IntDir>$(SolutionDir)\obj\$(Platform)\$(ConfigurationName)\</IntDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ConfigurationName)\</IntDir>
     <TargetName>$(TargetName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win8 Debug|x64'">
-    <OutDir>$(SolutionDir)\bin\$(Platform)\$(ConfigurationName)\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(Platform)\$(ConfigurationName)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(ConfigurationName)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ConfigurationName)\</IntDir>
     <TargetName>$(TargetName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win7 Debug|x64'">
-    <OutDir>$(SolutionDir)\bin\$(Platform)\$(ConfigurationName)\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(Platform)\$(ConfigurationName)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(ConfigurationName)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ConfigurationName)\</IntDir>
     <TargetName>$(TargetName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win7 Release|x64'">
-    <OutDir>$(SolutionDir)\bin\$(Platform)\$(ConfigurationName)\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(Platform)\$(ConfigurationName)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(ConfigurationName)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ConfigurationName)\</IntDir>
     <TargetName>$(TargetName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win8.1 Release|x64'">
-    <OutDir>$(SolutionDir)\bin\$(Platform)\$(ConfigurationName)\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(Platform)\$(ConfigurationName)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(ConfigurationName)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ConfigurationName)\</IntDir>
     <TargetName>$(TargetName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win10Release|x64'">
-    <OutDir>$(SolutionDir)\bin\$(Platform)\$(ConfigurationName)\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(Platform)\$(ConfigurationName)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(ConfigurationName)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ConfigurationName)\</IntDir>
     <TargetName>$(TargetName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win8 Release|x64'">
-    <OutDir>$(SolutionDir)\bin\$(Platform)\$(ConfigurationName)\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(Platform)\$(ConfigurationName)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(ConfigurationName)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ConfigurationName)\</IntDir>
     <TargetName>$(TargetName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Vista Debug|Win32'">
@@ -176,9 +176,7 @@
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalDependencies>FltMgr.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy /y "$(TargetPath)" \\Win81_x64\c$\$(TargetFileName)</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Win10Debug|x64'">
     <ClCompile>
@@ -193,9 +191,7 @@
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalDependencies>FltMgr.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy /y "$(TargetPath)" \\Win10_x64\c$\$(TargetFileName)</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Win8 Debug|x64'">
     <ClCompile>
@@ -204,10 +200,7 @@
       <PreprocessorDefinitions>_WIN8_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4054;4055;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <Link>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalDependencies>FltMgr.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -227,9 +220,7 @@
       <PreprocessorDefinitions>_WIN7_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4054;4055;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
-    <PostBuildEvent>
-      <Command>copy /y "$(TargetPath)" \\Win7_x64\c$\$(TargetFileName)</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <Link>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalDependencies>FltMgr.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -242,10 +233,7 @@
       <PreprocessorDefinitions>_WIN7_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4054;4055;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <Link>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalDependencies>FltMgr.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -284,10 +272,7 @@
       <PreprocessorDefinitions>_WIN8_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4054;4055;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <Link>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalDependencies>FltMgr.lib;%(AdditionalDependencies)</AdditionalDependencies>
